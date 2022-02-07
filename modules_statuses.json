@@ -1,3 +1,4 @@
 {
-    "Register": true
+    "Register": true,
+    "Auth": true
 }
