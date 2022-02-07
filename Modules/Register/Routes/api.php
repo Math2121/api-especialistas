@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\VerificationController;
 use Illuminate\Http\Request;
 use Modules\Register\Http\Controllers\RegisterStudentController;
 
@@ -13,6 +14,8 @@ use Modules\Register\Http\Controllers\RegisterStudentController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::prefix('register')->group(function () {
+Route::prefix('register')->name('register.')->group(function () {
     Route::post('/student',[RegisterStudentController::class,'create']);
+    Route::post('/specialist',[RegisterSpecialistController::class,'create']);
+    Route::get('/verification/{token}',[VerificationController::class,'index'])->name('auth.verification');
 });

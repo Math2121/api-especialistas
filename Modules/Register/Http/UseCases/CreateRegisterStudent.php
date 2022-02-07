@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
+use Nette\Utils\Json;
 use Throwable;
 
 class CreateRegisterStudent
@@ -25,9 +26,9 @@ class CreateRegisterStudent
         try {
             $newId = Crypt::encryptString($user->id);
             Mail::to($user->email)->send(new ConfirmRegister($user, $newId));
-            return ['message' => 'Pronto! Acesse seu email para confirmar o seu cadastro.'];
+            return ['success' => 'Pronto! Acesse seu email para confirmar o seu cadastro.'];
         } catch (Throwable $th) {
-            throw $th;
+            return  ['error' => $th];
         }
     }
 }

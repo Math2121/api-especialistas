@@ -2,12 +2,14 @@
 
 namespace Modules\Register\Http\Controllers;
 
+use Exception;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Register\Http\Requests\CreateRegisterStudenteRequest;
 use Modules\Register\Http\UseCases\CreateRegisterStudent;
-use Throwable;
+
 
 class RegisterStudentController extends Controller
 {
@@ -30,16 +32,16 @@ class RegisterStudentController extends Controller
      * Show the form for creating a new resource.
      * @return Renderable
      */
-    public function create(CreateRegisterStudenteRequest $request)
+    public function create(CreateRegisterStudenteRequest $request):JsonResponse
     {
 
         $request->validated();
         $studentUseCase = $this->studentUseCase;
         try {
-            $messageSuccess = $studentUseCase->execute($request);
-            dd($messageSuccess);
-        } catch (Throwable $th) {
-            return response(403)->json('error', $th);
+            $student = $studentUseCase->execute($request);
+            return response()->json(['success'=>'Cheque seu e-mail!'],201);
+        } catch (Exception $err) {
+            return response()->json(['error' => $err], 403);
         }
     }
 

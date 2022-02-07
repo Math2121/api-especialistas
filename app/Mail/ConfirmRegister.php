@@ -19,7 +19,7 @@ class ConfirmRegister extends Mailable
      *
      * @return void
      */
-    public function __construct($user, $token)
+    public function __construct(User $user, $token)
     {
         //
         $this->user = $user;
@@ -34,6 +34,7 @@ class ConfirmRegister extends Mailable
     public function build()
     {
         return $this->subject('Confirmação de Cadastro')
-        ->view('mail.confirm_register')->with(['user'=>$this->user,'token'=>$this->token]);
+            ->from('matheusdepaula527@gmail.com','TEste')
+            ->view('mail.confirm_register')->with(['user' => $this->user, 'token' => $this->token]);
     }
 }
