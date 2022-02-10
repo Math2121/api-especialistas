@@ -2,22 +2,22 @@
 
 namespace Modules\Auth\Http\Controllers;
 
-
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Modules\Auth\Http\Requests\LoginRequest;
 use Modules\Auth\Http\UseCases\LoginUseCase;
-class LoginStudentController extends Controller
-{
 
+class LoginSpecialistController extends Controller
+{
+    
     public function index(LoginRequest $request): JsonResponse
     {
         $loginStudentUseCase = new LoginUseCase();
 
 
         try {
-            $user = $loginStudentUseCase->execute($request->email, $request->password, 'student');
+            $user = $loginStudentUseCase->execute($request->email, $request->password, 'specialist');
 
             $response = [
                 'email' => $user['user']->email,
@@ -29,4 +29,6 @@ class LoginStudentController extends Controller
             return response()->json(['err' => $e->getMessage()], 403);
         }
     }
+
+   
 }

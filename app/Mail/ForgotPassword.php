@@ -2,28 +2,26 @@
 
 namespace App\Mail;
 
-use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ConfirmRegister extends Mailable
+class ForgotPassword extends Mailable
 {
     use Queueable, SerializesModels;
-
-    private User $user;
     private string $token;
+    private string $firstname;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user, $token)
+    public function __construct(string $token, string $firstname)
     {
         //
-        $this->user = $user;
         $this->token = $token;
+        $this->firstname = $firstname;
     }
 
     /**
@@ -33,8 +31,8 @@ class ConfirmRegister extends Mailable
      */
     public function build()
     {
-        return $this->subject('Confirmação de Cadastro')
-            ->from('matheusdepaula527@gmail.com','TEste')
-            ->view('mail.confirm_register')->with(['user' => $this->user, 'token' => $this->token]);
+        return $this->subject('Recuperação de senha')
+        ->from('matheusdepaula527@gmail.com','Teste')
+        ->view('mail.forgot_password')->with(['firstname' => $this->firstname, 'token' => $this->token]);
     }
 }
